@@ -26,6 +26,18 @@ def imports():
     from modules import paths, timer, import_hook, errors  # noqa: F401
     startup_timer.record("setup paths")
 
+    # openai-clip uses `from pkg_resources import packaging` which requires setuptools.
+    # On Python 3.12 setuptools may not be pre-installed; provide a minimal shim via
+    # the standalone `packaging` package (always available as a pip/pip-tools dependency).
+    try:
+        import pkg_resources  # noqa: F401
+    except ImportError:
+        import types
+        import packaging as _packaging
+        _pkg_resources = types.ModuleType("pkg_resources")
+        _pkg_resources.packaging = _packaging
+        sys.modules.setdefault("pkg_resources", _pkg_resources)
+
     import ldm.modules.encoders.modules  # noqa: F401
     startup_timer.record("import ldm")
 
