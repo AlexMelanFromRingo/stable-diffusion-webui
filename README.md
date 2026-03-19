@@ -1,7 +1,35 @@
 # Stable Diffusion web UI
 A web interface for Stable Diffusion, implemented using Gradio library.
 
+> **This is a community-maintained fork of [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)**
+> with updated dependencies for Python 3.10–3.12 compatibility.
+> Original project is licensed under [AGPL-3.0](LICENSE.txt); all modifications in this fork are made under the same license.
+
 ![](screenshot.png)
+
+## What's changed in this fork
+
+### Dependency updates (2025-03)
+
+| Package | Original | This fork |
+|---------|----------|-----------|
+| Python support | 3.10 only | **3.10, 3.11, 3.12** |
+| torch / torchvision | 2.1.2 / 0.16.2 (cu121) | **2.6.0 / 0.21.0 (cu124)** |
+| xformers | 0.0.23.post1 | **0.0.29.post3** |
+| transformers | 4.30.2 | **4.57.6** |
+| gradio | 3.41.2 | **3.50.2** |
+| pytorch_lightning | 1.9.4 | **2.6.1** |
+| accelerate | 0.21.0 | **1.13.0** |
+| Pillow | 9.5.0 | **10.4.0** |
+| numpy | 1.26.2 | **1.26.4** |
+| safetensors | 0.4.2 | **0.7.0** |
+| open-clip-torch | 2.20.0 | **3.3.0** |
+| scikit-image | 0.21.0 | **0.26.0** |
+| protobuf | ==3.20.0 (hard pin) | **>=5.29.0** |
+| + many others | — | see `requirements_versions.txt` |
+
+> **Branch `torch-bleeding-edge`**: torch **2.10.0** (CUDA 12.8 bundled) + xformers **0.0.35**.
+> Requires NVIDIA driver ≥ 560. See that branch's README for details.
 
 ## Features
 [Detailed feature showcase with images](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features):
@@ -111,9 +139,9 @@ Alternatively, use online services (like Google Colab):
 > For more details see [Install-and-Run-on-NVidia-GPUs](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-NVidia-GPUs)
 
 ### Automatic Installation on Windows
-1. Install [Python 3.10.6](https://www.python.org/downloads/release/python-3106/) (Newer version of Python does not support torch), checking "Add Python to PATH".
+1. Install [Python 3.10, 3.11, or 3.12](https://www.python.org/downloads/) (3.13+ not yet supported), checking "Add Python to PATH".
 2. Install [git](https://git-scm.com/download/win).
-3. Download the stable-diffusion-webui repository, for example by running `git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git`.
+3. Download this repository: `git clone https://github.com/AlexMelanFromRingo/stable-diffusion-webui.git`
 4. Run `webui-user.bat` from Windows Explorer as normal, non-administrator, user.
 
 ### Automatic Installation on Linux
@@ -128,30 +156,27 @@ sudo zypper install wget git python3 libtcmalloc4 libglvnd
 # Arch-based:
 sudo pacman -S wget git python3
 ```
-If your system is very new, you need to install python3.11 or python3.10:
+Python 3.10, 3.11, and 3.12 are all supported. If your system ships an older version:
 ```bash
-# Ubuntu 24.04
+# Ubuntu 24.04 — Python 3.12 is already the default
+# Ubuntu 22.04
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
-sudo apt install python3.11
+sudo apt install python3.12 python3.12-venv
 
 # Manjaro/Arch
-sudo pacman -S yay
-yay -S python311 # do not confuse with python3.11 package
+sudo pacman -S python
 
-# Only for 3.11
-# Then set up env variable in launch script
-export python_cmd="python3.11"
-# or in webui-user.sh
-python_cmd="python3.11"
+# If the default python3 is too old, set the command in webui-user.sh:
+python_cmd="python3.12"
 ```
 2. Navigate to the directory you would like the webui to be installed and execute the following command:
 ```bash
-wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
+wget -q https://raw.githubusercontent.com/AlexMelanFromRingo/stable-diffusion-webui/master/webui.sh
 ```
 Or just clone the repo wherever you want:
 ```bash
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+git clone https://github.com/AlexMelanFromRingo/stable-diffusion-webui
 ```
 
 3. Run `webui.sh`.
