@@ -17,6 +17,10 @@ def imports():
     import pytorch_lightning  # noqa: F401
     startup_timer.record("import torch")
     warnings.filterwarnings(action="ignore", category=DeprecationWarning, module="pytorch_lightning")
+    # pytorch_lightning 2.x removed pytorch_lightning.utilities.distributed; inject shim early
+    # so that ldm/sgm code importing rank_zero_only from that path still works.
+    if 'pytorch_lightning.utilities.distributed' not in sys.modules:
+        sys.modules['pytorch_lightning.utilities.distributed'] = pytorch_lightning.utilities.rank_zero
     warnings.filterwarnings(action="ignore", category=UserWarning, module="torchvision")
 
     os.environ.setdefault('GRADIO_ANALYTICS_ENABLED', 'False')
