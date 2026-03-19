@@ -38,8 +38,10 @@ def imports():
     except ImportError:
         import types
         import packaging as _packaging
+        import packaging.version as _packaging_version
         _pkg_resources = types.ModuleType("pkg_resources")
         _pkg_resources.packaging = _packaging
+        _pkg_resources.parse_version = _packaging_version.Version
         sys.modules.setdefault("pkg_resources", _pkg_resources)
 
     import ldm.modules.encoders.modules  # noqa: F401
