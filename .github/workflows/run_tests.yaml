@@ -26,6 +26,12 @@ jobs:
         with:
           path: models
           key: "2023-12-30"
+      - name: Cache repositories
+        id: cache-repositories
+        uses: actions/cache@v4
+        with:
+          path: repositories
+          key: "repositories-sd-21f890f9-k-ab527a9a-blip-48211a15-sdxl-45c443b3"
       - name: Install test dependencies
         run: pip install wait-for-it -r requirements-test.txt
         env:
